@@ -1,0 +1,31 @@
+/* PageCounter.css */
+
+.page-counter-container {
+    display: inline-block;
+    background-color: #9b9b9b;
+    border-radius: 20px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-bottom: 1px;
+    line-height: 0.8;
+  }
+  
+  .page-counter {
+    display: inline-block;
+  }
+  
+  .current-page {
+    color: rgb(8, 8, 8); 
+    cursor: pointer;
+    font-size: 26px; 
+    font-weight: bold; 
+  }
+  
+  /* Style for non-current pages */
+  .page-counter span:not(.current-page) {
+    color: rgb(80, 80, 80);
+    cursor: pointer;
+    font-size: 26px; 
+    font-weight: bold; 
+  }
+  

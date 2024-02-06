@@ -1,0 +1,26 @@
+.tag {
+    display: inline-block;
+    border-radius: 20px;
+    padding: 4px 8px;
+    margin-bottom: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    color: black;
+  }
+  
+  .tag-text {
+    margin: 0;
+  }
+  
+  .tag-announcement {
+    background-color: #E7C2FF;
+  }
+  
+  .tag-alert {
+    background-color: #ffce72;
+  }
+  
+  .tag-offer {
+    background-color: #a0f8a0;
+  }
+  
