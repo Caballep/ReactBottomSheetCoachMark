@@ -5,11 +5,11 @@ import SwipeableContainer from '../SwipeableContainer/SwipableContainer';
 
 interface BottomSheetCoachMarkProps {
   isOpen: boolean;
+  contentArray: React.ReactNode[]; 
   onClose: () => void;
-  children: React.ReactNode;
 }
 
-const BottomSheetCoachMark: React.FC<BottomSheetCoachMarkProps> = ({ isOpen, onClose, children }) => {
+const BottomSheetCoachMark: React.FC<BottomSheetCoachMarkProps> = ({ isOpen, onClose, contentArray }) => {
   const [startY, setStartY] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -33,7 +33,7 @@ const BottomSheetCoachMark: React.FC<BottomSheetCoachMarkProps> = ({ isOpen, onC
 
   // Pages 
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const totalPages = React.Children.toArray(children).filter((child: any) => React.isValidElement(child)).length;
+  const totalPages = contentArray.filter(child => React.isValidElement(child)).length;
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -51,7 +51,7 @@ const BottomSheetCoachMark: React.FC<BottomSheetCoachMarkProps> = ({ isOpen, onC
       >
         <div className="bottom-sheet-content">
           <SwipeableContainer onChildChange={handlePageChange}>
-            {React.Children.toArray(children).map((child, index) => {
+            {contentArray.map((child, index) => {
               if (React.isValidElement(child)) {
                 return React.cloneElement(child, { key: index });
               }

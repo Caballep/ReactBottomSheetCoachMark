@@ -30,9 +30,7 @@ const App: React.FC = () => {
   return (
     <div>
       {/* <button onClick={toggleBottomSheet}>Open Bottom Sheet</button> */}
-      <BottomSheetCoachMark isOpen={bottomSheetOpen} onClose={closeBottomSheet}>
-        {contentArray} {/* Pass the contentArray as children */}
-      </BottomSheetCoachMark>
+      <BottomSheetCoachMark isOpen={bottomSheetOpen} contentArray={contentArray} onClose={closeBottomSheet} />
     </div>
   );
 };
