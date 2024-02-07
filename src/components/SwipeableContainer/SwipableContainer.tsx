@@ -1,5 +1,5 @@
-import React, { useState, ReactNode, useEffect } from 'react';
-import './SwipableContainer.css'
+import React, { useState, ReactNode, useEffect, useRef } from 'react';
+import './SwipableContainer.css';
 
 interface SwipeableComponentProps {
   children: ReactNode[];
@@ -9,11 +9,11 @@ interface SwipeableComponentProps {
 const SwipeableContainer: React.FC<SwipeableComponentProps> = ({ children, onChildChange }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const totalChildren = React.Children.count(children);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     onChildChange(currentIndex);
   }, [currentIndex, onChildChange]);
-
 
   const handleSwipe = (event: React.MouseEvent<HTMLDivElement, MouseEvent> | React.TouchEvent<HTMLDivElement>) => {
     const swipeThreshold = 50;
@@ -21,7 +21,7 @@ const SwipeableContainer: React.FC<SwipeableComponentProps> = ({ children, onChi
     let moveX = 0;
 
     const handleMove = (moveEvent: MouseEvent | TouchEvent) => {
-      moveX = ('touches' in moveEvent ? (moveEvent as TouchEvent).touches[0].clientX : (moveEvent as MouseEvent).clientX);
+      moveX = 'touches' in moveEvent ? (moveEvent as TouchEvent).touches[0].clientX : (moveEvent as MouseEvent).clientX;
     };
 
     const handleEnd = () => {
@@ -43,13 +43,19 @@ const SwipeableContainer: React.FC<SwipeableComponentProps> = ({ children, onChi
     document.addEventListener('touchend', handleEnd);
   };
 
+  const containerStyle: React.CSSProperties = {
+    transform: `translateX(-${currentIndex * (100)}%)`, // Adjust translateX based on currentIndex
+  };
+
   return (
     <div className="swipeable-container" onMouseDown={handleSwipe} onTouchStart={handleSwipe}>
-      {React.Children.map(children, (child, index) => (
-        <div className={`swipeable-child ${index === currentIndex ? 'active' : ''}`}>
-          {child}
-        </div>
-      ))}
+      <div className="swipeable-content" style={containerStyle} ref={containerRef}>
+        {React.Children.map(children, (child, index) => (
+          <div className={`swipeable-child`} key={index}>
+            {child}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

@@ -1,13 +1,17 @@
 .swipeable-container {
     width: 100%;
+    height: 100%;
     position: relative;
+    overflow: hidden; /* Ensure content doesn't overflow */
+  }
+  
+  .swipeable-content {
+    display: flex;
+    transition: transform 0.3s ease; /* Add transition for smooth sliding */
   }
   
   .swipeable-child {
-    display: none;
+    flex: 0 0 100%; /* Ensure each child takes up the full width */
   }
   
-  .swipeable-child.active {
-    display: block;
-  }
   
