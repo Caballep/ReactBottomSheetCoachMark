@@ -1,0 +1,13 @@
+.swipeable-container {
+    width: 100%;
+    position: relative;
+  }
+  
+  .swipeable-child {
+    display: none;
+  }
+  
+  .swipeable-child.active {
+    display: block;
+  }
+  

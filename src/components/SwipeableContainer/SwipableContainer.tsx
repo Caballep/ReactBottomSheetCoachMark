@@ -1,15 +1,22 @@
-import React, { useState, ReactNode } from 'react';
+import React, { useState, ReactNode, useEffect } from 'react';
+import './SwipableContainer.css'
 
 interface SwipeableComponentProps {
   children: ReactNode[];
+  onChildChange: (index: number) => void;
 }
 
-const SwipeableComponent: React.FC<SwipeableComponentProps> = ({ children }) => {
+const SwipeableContainer: React.FC<SwipeableComponentProps> = ({ children, onChildChange }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const totalChildren = React.Children.count(children);
 
+  useEffect(() => {
+    onChildChange(currentIndex);
+  }, [currentIndex, onChildChange]);
+
+
   const handleSwipe = (event: React.MouseEvent<HTMLDivElement, MouseEvent> | React.TouchEvent<HTMLDivElement>) => {
-    const swipeThreshold = 50; // adjust as needed
+    const swipeThreshold = 50;
     const startX = 'touches' in event ? event.touches[0].clientX : event.clientX;
     let moveX = 0;
 
@@ -37,9 +44,9 @@ const SwipeableComponent: React.FC<SwipeableComponentProps> = ({ children }) => 
   };
 
   return (
-    <div style={{ width: '100%', position: 'relative' }} onMouseDown={handleSwipe} onTouchStart={handleSwipe}>
+    <div className="swipeable-container" onMouseDown={handleSwipe} onTouchStart={handleSwipe}>
       {React.Children.map(children, (child, index) => (
-        <div style={{ display: index === currentIndex ? 'block' : 'none' }}>
+        <div className={`swipeable-child ${index === currentIndex ? 'active' : ''}`}>
           {child}
         </div>
       ))}
@@ -47,4 +54,4 @@ const SwipeableComponent: React.FC<SwipeableComponentProps> = ({ children }) => 
   );
 };
 
-export default SwipeableComponent;
+export default SwipeableContainer;

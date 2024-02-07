@@ -29,3 +29,20 @@
     user-select: none;
   }
   
+  
+  .bottom-sheet.open {
+    height: 300px;
+  }
+  
+  .bottom-sheet-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+  }
+  
+  #bottom-sheet-spacer {
+    height: 18px;
+  }
+  

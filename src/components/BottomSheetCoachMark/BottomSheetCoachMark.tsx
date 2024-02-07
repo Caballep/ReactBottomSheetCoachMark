@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import './BottomSheetCoachMark.css';
 import PageCounter from '../PageCounter/PageCounter';
+import SwipeableContainer from '../SwipeableContainer/SwipableContainer';
 
 interface BottomSheetCoachMarkProps {
   isOpen: boolean;
@@ -32,7 +33,7 @@ const BottomSheetCoachMark: React.FC<BottomSheetCoachMarkProps> = ({ isOpen, onC
 
   // Pages 
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const totalPages = 4;
+  const totalPages = React.Children.toArray(children).filter((child: any) => React.isValidElement(child)).length;
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -49,8 +50,16 @@ const BottomSheetCoachMark: React.FC<BottomSheetCoachMarkProps> = ({ isOpen, onC
         onTouchEnd={handleTouchEnd}
       >
         <div className="bottom-sheet-content">
-          {children}
-          <PageCounter currentPage={1} totalPages={5} onPageChange={handlePageChange}/>
+          <SwipeableContainer onChildChange={handlePageChange}>
+            {React.Children.toArray(children).map((child, index) => {
+              if (React.isValidElement(child)) {
+                return React.cloneElement(child, { key: index });
+              }
+              return null;
+            })}
+          </SwipeableContainer>
+          <div id='bottom-sheet-spacer'/>
+          <PageCounter currentPage={currentPage + 1} totalPages={totalPages} onPageChange={handlePageChange}/>
         </div>
       </div>
     </div>
